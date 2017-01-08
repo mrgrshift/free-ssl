@@ -7,7 +7,7 @@
 #Don't forget to vote for mrgr delegate in Shift: 14156057994616021440S
 
 SSLUSER=$USER
-PWD=$(pwd)
+LOCAL_HOME=$(pwd)
 CONF=$(pwd)/config.sh
 LOG=$(pwd)/logs/installssl.log
 CYAN='\033[1;36m'
@@ -84,7 +84,7 @@ sudo sh -c "echo \"COMMIT\" >> /etc/ufw/before.rules" >> $LOG
 echo "done"
 echo "done" >> $LOG
 
-cd $PWD
+cd $LOCAL_HOME
 sudo sh -c "echo \"SSLUSER=\\\"$SSLUSER\\\"\" > $CONF"
 sudo sh -c "echo \"DOMAIN=\\\"$DOMAIN_NAME\\\"\" >> $CONF"
 sudo sh -c "echo \"EMAIL=\\\"$EMAIL\\\"\" >> $CONF"
@@ -100,7 +100,7 @@ echo "    COMMIT"
 echo
 echo "Please confirm the above. If everything is right this script needs to reload your firewall."
 echo "* Be aware that if the /etc/ufw/before.rules file contains other type of lines at the end of the file your firewall might not work properly."
-echo "* If you are seeing other type of lines don't worry, this script has backed up your file and you can find it here: $PWD/before.rules.backup"
+echo "* If you are seeing other type of lines don't worry, this script has backed up your file and you can find it here: $LOCAL_HOME/before.rules.backup"
 echo "* If you don't accept the following question this script will restore your file to the above version."
 
 	read -p "Do you want to continue (y/n)?: " -n 1 -r
