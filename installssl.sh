@@ -94,7 +94,7 @@ echo "NETWORK_INTERFACE=\"$NETWORK_INTERFACE\"" >> $CONF
 echo
 echo "*************************************** Please do the following:"
 echo "Run: sudo nano /etc/ufw/before.rules"
-echo "And go to the bottom of the file and check your las 4 lines, should be like follow:"
+echo "And go to the bottom of the file and check your last 4 lines, should be like follow:"
 echo "    *nat"
 echo "    :PREROUTING ACCEPT [0:0]"
 echo "    -A PREROUTING -i $NETWORK_INTERFACE -p tcp --dport 443 -j REDIRECT --to-port $HTTPS_PORT"
@@ -147,9 +147,9 @@ echo
 echo -e "${CYAN}Installation Successfully Completed${OFF}"
 echo "Installation Successfully Completed" >> $LOG
 echo
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)."
+echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)"
 echo
 echo "Don't forget to vote for mrgr delegate."
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)." >> $LOG
+echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)" >> $LOG
 echo "Don't forget to vote for mrgr delegate." >> $LOG
 
