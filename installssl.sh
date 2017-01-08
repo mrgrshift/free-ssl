@@ -3,7 +3,8 @@
 #This script use https://github.com/certbot/
 
 
-#Don't forget to vote for mrgr delegate: 3125853987625788223L
+#Don't forget to vote for mrgr delegate in Lisk: 3125853987625788223L
+#Don't forget to vote for mrgr delegate in Shift: 14156057994616021440S
 
 SSLUSER=$USER
 PWD=$(pwd)
