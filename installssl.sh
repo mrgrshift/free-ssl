@@ -85,12 +85,14 @@ echo "done"
 echo "done" >> $LOG
 
 cd $LOCAL_HOME
-sudo sh -c "echo \"SSLUSER=\\\"$SSLUSER\\\"\" > $CONF"
-sudo sh -c "echo \"DOMAIN=\\\"$DOMAIN_NAME\\\"\" >> $CONF"
-sudo sh -c "echo \"EMAIL=\\\"$EMAIL\\\"\" >> $CONF"
-sudo sh -c "echo \"HTTPS_PORT=\\\"$HTTPS_PORT\\\"\" >> $CONF"
-sudo sh -c "echo \"NETWORK_INTERFACE=\\\"$NETWORK_INTERFACE\\\"\" >> $CONF"
+echo "SSLUSER=\"$SSLUSER\"" > $CONF
+echo "DOMAIN=\"$DOMAIN_NAME\"" >> $CONF
+echo "EMAIL=\"$EMAIL\"" >> $CONF
+echo "HTTPS_PORT=\"$HTTPS_PORT\"" >> $CONF
+echo "NETWORK_INTERFACE=\"$NETWORK_INTERFACE\"" >> $CONF
 
+echo
+echo "*************************************** Please do the following:"
 echo "Run: sudo nano /etc/ufw/before.rules"
 echo "And go to the bottom of the file and check your las 4 lines, should be like follow:"
 echo "    *nat"
@@ -138,11 +140,16 @@ echo "\"cert\": \"/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem" >> $LOG
 
 echo
 echo "Save and exit from your confir.json file."
-echo "Perform : bash lisk.sh reload"
+echo "For Lisk perform : bash lisk.sh reload"
+echo "For Shift perform: ./shift_manager.bash stop && ./shift_manager.bash start"
+echo "                   or simply stop and start your node app.js"
 echo
 echo -e "${CYAN}Installation Successfully Completed${OFF}"
 echo "Installation Successfully Completed" >> $LOG
 echo
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :). Don't forget to vote for mrgr delegate."
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :). Don't forget to vote for mrgr delegate." >> $LOG
+echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)."
+echo
+echo "Don't forget to vote for mrgr delegate."
+echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)." >> $LOG
+echo "Don't forget to vote for mrgr delegate." >> $LOG
 
