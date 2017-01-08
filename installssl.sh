@@ -35,7 +35,7 @@ echo -n "Enter the port you will use for HTTPS: "
 echo
 echo "Now this script need something from you."
 echo -e "Before proceeding please check your ufw configuration, execute in a new terminal: ${CYAN}sudo ufw status${OFF}"
-echo "You need to have your own ports enable, obligatory your SSH port and your LISK client port."
+echo "You need to have your own ports enable, obligatory your SSH port and your LISK/SHIFT client port."
 echo "Execute ifconfig in the other terminal and look for network interface (normally is eth0, eth1, eth2, ens1, ens2, ens3...)."
 echo -n "What is your network interface?: "
         read NETWORK_INTERFACE
