@@ -1,6 +1,6 @@
 #!/bin/bash
 #This script will help you to generate a trusted SSL certificate issued by letsencrypt
-#This script use https://github.com/certbot/
+#This script uses https://github.com/certbot/certbot
 
 
 #Don't forget to vote for mrgr delegate in Lisk: 3125853987625788223L
@@ -18,9 +18,9 @@ echo "Installation start.." >> $LOG
 echo
 
 if [ -f "config.sh" ]; then
-	echo "**A previous installation was detected.."
-	echo "This script is meant to be executed only once."
-	echo "If you are trying to run it again is because you possibly had a problem, if so please contact mrgr in https://lisk.chat/direct/mrgr or in https://shiftnrg.slack.com/messages/@mrgr/"
+	echo "**A previous installation was detected.." | tee -a $LOG
+	echo "This script is meant to be executed only once." | tee -a $LOG
+	echo "If you are trying to run it again is because you possibly had a problem, if so please contact mrgr in https://lisk.chat/direct/mrgr or in https://shiftnrg.slack.com/messages/@mrgr/" | tee -a $LOG
 	exit 0
 fi
 
@@ -46,43 +46,35 @@ echo "Your https port is: $HTTPS_PORT" >> $LOG
 echo "Your network interface is: $NETWORK_INTERFACE" >> $LOG
 
 echo
-echo -n "Enabling port 443/tcp.. "
-echo "Enabling port 443/tcp.." >> $LOG
-sudo ufw allow 443/tcp &>> $LOG || { echo "Could not enable port 443. Please read your logs/installssl.log file. Exiting." && exit 1; }
+echo -n "Enabling port 443/tcp.. " | tee -a $LOG
+sudo ufw allow 443/tcp &>> $LOG || { echo "Could not enable port 443. Please read your logs/installssl.log file. Exiting."  | tee -a $LOG && exit 1; }
 sudo cp /etc/ufw/before.rules before.rules.backup #Backing up file /etc/ufw/before.rules
-echo "done"
-echo "done" >> $LOG
+echo "done" | tee -a $LOG
 
 echo
-echo -n "Installing certbot.. "
-echo "Installing certbot.." >> $LOG
+echo -n "Installing certbot.. " | tee -a $LOG
 cd /opt
-sudo git clone https://github.com/certbot/certbot.git &>> $LOG || { echo "Could not clone git certbot source. Please read your logs/installssl.log file. Exiting." && exit 1; }
-echo "done"
-echo "done" >> $LOG
+sudo git clone https://github.com/certbot/certbot.git &>> $LOG || { echo "Could not clone git certbot source. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
+echo "done" | tee -a $LOG
 export LC_ALL="en_US.UTF-8" >> $LOG
 export LC_CTYPE="en_US.UTF-8" >> $LOG
 
 echo
-echo -n "Generating new SSL certificate.. this could take some minutes.."
-echo "Generating new SSL certificate.." >> $LOG
-/opt/certbot/certbot-auto certonly --standalone -d $DOMAIN_NAME --email $EMAIL --agree-tos --non-interactive &>> $LOG || { echo "Could not generate SSL certificate. Please read your logs/installssl.log file. Exiting." && exit 1; }
-echo "done"
-echo "done" >> $LOG
+echo -n "Generating new SSL certificate.. this could take some minutes.." | tee -a $LOG
+/opt/certbot/certbot-auto certonly --standalone -d $DOMAIN_NAME --email $EMAIL --agree-tos --non-interactive &>> $LOG || { echo "Could not generate SSL certificate. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
+echo "done" | tee -a $LOG
 sudo chmod 755 /etc/letsencrypt/archive/
 sudo chmod 755 /etc/letsencrypt/live/
 
 echo
-echo -n "Installing redirection on port 443 to port $HTTPS_PORT.. "
-echo "Installing redirection on port 443 to port $HTTPS_PORT.. " >> $LOG
+echo -n "Installing redirection on port 443 to port $HTTPS_PORT.. " | tee -a $LOG
 sudo sh -c "echo >> /etc/ufw/before.rules" >> $LOG
 sudo sh -c "echo \"# MRGR -- Auto-Redirect \" >> /etc/ufw/before.rules" >> $LOG
 sudo sh -c "echo \"*nat\" >> /etc/ufw/before.rules" >> $LOG
 sudo sh -c "echo \":PREROUTING ACCEPT [0:0]\" >> /etc/ufw/before.rules" >> $LOG
 sudo sh -c "echo \"-A PREROUTING -i $NETWORK_INTERFACE -p tcp --dport 443 -j REDIRECT --to-port $HTTPS_PORT\" >> /etc/ufw/before.rules" >> $LOG
 sudo sh -c "echo \"COMMIT\" >> /etc/ufw/before.rules" >> $LOG
-echo "done"
-echo "done" >> $LOG
+echo "done" | tee -a $LOG
 
 cd $LOCAL_HOME
 echo "SSLUSER=\"$SSLUSER\"" > $CONF
@@ -109,47 +101,45 @@ echo "* If you don't accept the following question this script will restore your
 	if [[  $REPLY =~ ^[Yy]$ ]]
 	   then
 		echo "Deleting allow 443/tcp rule.." >> $LOG
-		sudo ufw delete allow 443/tcp &>> $LOG || { echo "Could not remove allow 443/tcp rule. Please read your logs/installssl.log file. Exiting." && exit 1; }
+		sudo ufw delete allow 443/tcp &>> $LOG || { echo "Could not remove allow 443/tcp rule. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
 		echo "Allowing your https port $HTTPS_PORT/tcp.." >> $LOG
-		sudo ufw allow $HTTPS_PORT/tcp &>> $LOG || { echo "Could not allow $HTTPS_PORT/tcp rule. Please read your logs/installssl.log file. Exiting." && exit 1; }
+		sudo ufw allow $HTTPS_PORT/tcp &>> $LOG || { echo "Could not allow $HTTPS_PORT/tcp rule. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
 		echo "ufw reload.." >> $LOG
-		sudo ufw reload &>> $LOG || { echo "Could not reload ufw. Please read your logs/installssl.log file. Exiting." && exit 1; }
+		sudo ufw reload &>> $LOG || { echo "Could not reload ufw. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
 	else
 		echo
-		echo "You have decided not to continue. Please add the lines described above for /etc/ufw/before.rules and reload your firewall manually."
+		echo "You have decided not to continue. Please add the lines described above for /etc/ufw/before.rules and reload your firewall manually." | tee -a $LOG
 		exit 0
 	fi
 
 echo
-echo "Your SSL Certificate has been created successfully, now you need to perform the following manual task."
-echo "Your SSL Certificate has been created successfully" >> $LOG
+echo "Your SSL Certificate has been created successfully, now you need to perform the following manual task." | tee -a $LOG
 echo
-echo "Go to your lisk config.json file and edit ssl section like the following:"
-echo "    \"ssl\": {"
+echo "Go to your lisk/shift config.json file and edit ssl section like the following:" | tee -a $LOG
+echo "    \"ssl\": {" | tee -a $LOG
 echo -e "        \"enabled\": ${CYAN}true${OFF},"
-echo "        \"options\": {"
+echo "        \"enabled\": true," >> $LOG
+echo "        \"options\": {" | tee -a $LOG
 echo -e "            \"port\": ${CYAN}$HTTPS_PORT${OFF},"
-echo "            \"address\"\: \"0.0.0.0\","
+echo "            \"port\": $HTTPS_PORT," >> $LOG
+echo "            \"address\"\: \"0.0.0.0\"," | tee -a $LOG
 echo -e "            \"key\": \"${CYAN}/etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem${OFF}\","
+echo "            \"key\": \"/etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem\"," >> $LOG
 echo -e "            \"cert\": \"${CYAN}/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem${OFF}\""
-echo "        }"
-echo "    },"
-echo "Edit your config.json in \"ssl\", write your port $HTTPS_PORT and change the following lines:" >> $LOG
-echo "\"key\": \"/etc/letsencrypt/live/$DOMAIN_NAME/privkey.pem\"" >> $LOG
-echo "\"cert\": \"/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem" >> $LOG
+echo "            \"cert\": \"/etc/letsencrypt/live/$DOMAIN_NAME/fullchain.pem\"" >> $LOG
+echo "        }" | tee -a $LOG
+echo "    }," | tee -a $LOG
 
 echo
-echo "Save and exit from your confir.json file."
-echo "For Lisk perform : bash lisk.sh reload"
-echo "For Shift perform: ./shift_manager.bash stop && ./shift_manager.bash start"
-echo "                   or simply stop and start your node app.js"
+echo "Save and exit from your config.json file." | tee -a $LOG
+echo "For Lisk perform : bash lisk.sh reload" | tee -a $LOG
+echo "For Shift perform: ./shift_manager.bash stop && ./shift_manager.bash start" | tee -a $LOG
+echo "                   or simply stop and start your node app.js" | tee -a $LOG
 echo
 echo -e "${CYAN}Installation Successfully Completed${OFF}"
 echo "Installation Successfully Completed" >> $LOG
 echo
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)"
-echo
-echo "Don't forget to vote for mrgr delegate."
-echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)" >> $LOG
-echo "Don't forget to vote for mrgr delegate." >> $LOG
+echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)" | tee -a $LOG
+echo " "  | tee -a $LOG
+echo "Don't forget to vote for mrgr delegate." | tee -a $LOG
 
