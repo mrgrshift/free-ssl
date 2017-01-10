@@ -30,8 +30,10 @@ then
         echo "Greater than 30 days, no need to renew." >> $LOG
   fi
 else
-  echo "The certificate has expired.. it will start the renewal script.." >> $LOG
-  RENEW="1"
+  echo "This certificate does not exist or could not be successfully renewed. You can do the following:" >> $LOG
+  echo " - Check if your domain is still alive." >> $LOG
+  echo " - Check if the folder /etc/letsencrypt/live/$DOMAIN/ exists and it contain *.pem files." >> $LOG
+  echo " - If nothing of the above works, remove /etc/letsencrypt/live/$DOMAIN/ and run the installer again: bash installssl.sh" >> $LOG
 fi
 echo "############" >> $LOG
 echo " " >> $LOG
