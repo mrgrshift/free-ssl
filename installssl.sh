@@ -100,6 +100,12 @@ echo "* If you don't accept the following question this script will restore your
 	read -p "Do you want to continue (y/n)?: " -n 1 -r
 	if [[  $REPLY =~ ^[Yy]$ ]]
 	   then
+		echo "Installing the renew script.." | tee -a $LOG
+		echo "#!/bin/sh" >  start_renew.sh
+		echo "cd /home/$SSLUSER/free-ssl/" >> start_renew.sh
+		echo "source config.sh" >> start_renew.sh
+		echo "bash renewssl.sh \$1" >> start_renew.sh
+
 		echo "Deleting allow 443/tcp rule.." >> $LOG
 		sudo ufw delete allow 443/tcp &>> $LOG || { echo "Could not remove allow 443/tcp rule. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
 		echo "Allowing your https port $HTTPS_PORT/tcp.." >> $LOG
@@ -143,5 +149,12 @@ echo "Installation Successfully Completed" >> $LOG
 echo
 echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)" | tee -a $LOG
 echo " "  | tee -a $LOG
+echo "Now to enable the renewssh.sh script you need to add a new cron task." | tee -a $LOG
+echo "It is recommended to use http://www.crontab-generator.org/ to help you with your expression" | tee -a $LOG
+echo -e "Example for check your SSL certificate every Wednesday at 18pm you need to run ${CYAN}sudo crontab -e${OFF} and add at the end:"
+echo "Example for check your SSL certificate every Wednesday at 18pm you need to run sudo crontab -e and add at the end:" >> $LOG
+echo "* 12 * * WED bash /home/$SSLUSER/free-ssl/start_renew.sh >> /home/$SSLUSER/free-ssl/logs/cron.log" | tee -a $LOG
+echo "To renew a certificate in Shift node please add at the end: /home/$SSLUSER/free-ssl/start_renew.sh shift" | tee -a $LOG
+echo " " | tee -a $LOG
 echo "Don't forget to vote for mrgr delegate." | tee -a $LOG
 
