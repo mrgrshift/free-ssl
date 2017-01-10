@@ -10,10 +10,12 @@ This script uses https://github.com/certbot/certbot
 
 ## Install trusted SSL certificate issued by Letsencrypt
 If you have a domain install a trusted SSL certificate issued by Letsencrypt use: `bash installssl.sh`<br>
-**installssl.sh** will guide you through the installation process.
+**installssl.sh** will guide you through the installation process.<br>
+To see the result of the script go to: *~/free-ssl/logs/installssl.log*
 #### Renew letsencrypt certificate
 You need to complete all the installssl.sh instructions, at the end it will tell you to add one line to your cron jobs. This line will do the job of checking the expiring date of your certificate.<br>
 `renewssl.sh` will renew your certificate if the expiration date is less than 30 days.<br>
+To see the result of the script go to: *~/free-ssl/logs/renewssl.log*<br>
 **IMPORTANT NOTICE** renewssl.sh also will perform *bash lisk.sh reload*, please check before enable automatic renewal if your managment script can handle a random reload of Lisk.<br>
 For Shift the renewssl.sh script will stop and restart your *shift screen* session if you need other method please contact [mrgr] (https://shiftnrg.slack.com/messages/@mrgr/).<br>
 
@@ -21,6 +23,7 @@ For Shift the renewssl.sh script will stop and restart your *shift screen* sessi
 If you don't have your own domain you can still generate a SSL certificate, use `bash localssl.sh`<br>
 It is recommended to have a domain and update your certificate with *installssl.sh*<br>
 This type of certificate doesn't need the renewssh.sh script.<br>
+To see the result of the script go to: *~/free-ssl/logs/localssl.log*<br>
 
 ## Vote/Donate
 If you like this script please consider to vote/donate to this accounts:<br>
