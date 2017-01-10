@@ -18,7 +18,6 @@ Software project: https://github.com/certbot/certbot <br>
 Notes for developers: https://certbot.eff.org/docs/contributing.html <br>
 Main Website: https://certbot.eff.org <br>
 Let's Encrypt Website: https://letsencrypt.org <br>
-IRC Channel: #letsencrypt on `Freenode`_ or #certbot on `OFTC`_ <br>
 Community: https://community.letsencrypt.org <br>
 ACME spec: http://ietf-wg-acme.github.io/acme/ <br>
 ACME working area in github: https://github.com/ietf-wg-acme/acme <br>
