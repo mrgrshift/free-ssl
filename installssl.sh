@@ -36,7 +36,7 @@ echo
 echo "Now this script need something from you."
 echo -e "Before proceeding please check your ufw configuration, execute in a new terminal: ${CYAN}sudo ufw status${OFF}"
 echo "You need to have your own ports enable, obligatory your SSH port and your LISK/SHIFT client port."
-echo "Execute ifconfig in the other terminal and look for network interface (normally is eth0, eth1, eth2, ens1, ens2, ens3...)."
+echo -e "Execute ${CYAN}ifconfig${OFF} in the other terminal and look for network interface (normally is eth0, eth1, eth2, ens1, ens2, ens3...)."
 echo -n "What is your network interface?: "
         read NETWORK_INTERFACE
 echo
@@ -113,6 +113,8 @@ echo "* If you don't accept the following question this script will restore your
 	fi
 
 echo
+echo
+echo "++++++++++++++++++++++++++++++++++++++++++" | tee -a $LOG
 echo "Your SSL Certificate has been created successfully, now you need to perform the following manual task." | tee -a $LOG
 echo
 echo "Go to your lisk/shift config.json file and edit ssl section like the following:" | tee -a $LOG
