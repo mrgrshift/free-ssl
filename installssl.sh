@@ -35,7 +35,7 @@ echo -n "Enter the port you will use for HTTPS: "
 echo
 echo "Now this script need something from you."
 echo -e "Before proceeding please check your ufw configuration, execute in a new terminal: ${CYAN}sudo ufw status${OFF}"
-echo "You need to have your own ports enable, obligatory your SSH port and your LISK/SHIFT client port."
+echo "You need to have your own ports enable, obligatory your SSH port and your LISK client port."
 echo -e "Execute ${CYAN}ifconfig${OFF} in the other terminal and look for network interface (normally is eth0, eth1, eth2, ens1, ens2, ens3...)."
 echo -n "What is your network interface?: "
         read NETWORK_INTERFACE
@@ -114,6 +114,10 @@ echo "* If you don't accept the following question this script will restore your
 		echo "ufw reload.." >> $LOG
 		sudo ufw reload &>> $LOG || { echo "Could not reload ufw. Please read your logs/installssl.log file. Exiting." | tee -a $LOG && exit 1; }
 	else
+		echo -n "Restoring ufw/before.rules.." | tee -a $LOG
+		sudo rm /etc/ufw/before.rules >> $LOG
+		sudo cp before.rules.backup /etc/ufw/before.rules >> $LOG
+		echo "done" | tee -a $LOG
 		echo
 		echo "You have decided not to continue. Please add the lines described above for /etc/ufw/before.rules and reload your firewall manually." | tee -a $LOG
 		exit 0
@@ -124,7 +128,7 @@ echo
 echo "++++++++++++++++++++++++++++++++++++++++++" | tee -a $LOG
 echo "Your SSL Certificate has been created successfully, now you need to perform the following manual task." | tee -a $LOG
 echo
-echo "Go to your lisk/shift config.json file and edit ssl section like the following:" | tee -a $LOG
+echo "Go to your Lisk config.json file and edit ssl section like the following:" | tee -a $LOG
 echo "    \"ssl\": {" | tee -a $LOG
 echo -e "        \"enabled\": ${CYAN}true${OFF},"
 echo "        \"enabled\": true," >> $LOG
@@ -142,8 +146,8 @@ echo "    }," | tee -a $LOG
 echo
 echo "Save and exit from your config.json file." | tee -a $LOG
 echo "For Lisk perform : bash lisk.sh reload" | tee -a $LOG
-echo "For Shift perform: ./shift_manager.bash stop && ./shift_manager.bash start" | tee -a $LOG
-echo "                   or simply stop and start your node app.js" | tee -a $LOG
+#echo "For Shift perform: ./shift_manager.bash stop && ./shift_manager.bash start" | tee -a $LOG
+#echo "                   or simply stop and start your node app.js" | tee -a $LOG
 echo
 echo -e "${CYAN}Installation Successfully Completed${OFF}"
 echo "Installation Successfully Completed" >> $LOG
@@ -155,7 +159,7 @@ echo "It is recommended to use http://www.crontab-generator.org/ to help you wit
 echo -e "Example for check your SSL certificate every Wednesday at 12pm you need to run ${CYAN}sudo crontab -e${OFF} and add at the end:"
 echo "Example for check your SSL certificate every Wednesday at 12pm you need to run sudo crontab -e and add at the end:" >> $LOG
 echo "* 12 * * WED bash /home/$SSLUSER/free-ssl/start_renew.sh >> /home/$SSLUSER/free-ssl/logs/cron.log" | tee -a $LOG
-echo "To renew a certificate in Shift node please add at the end: /home/$SSLUSER/free-ssl/start_renew.sh shift" | tee -a $LOG
+#echo "To renew a certificate in Shift node please add at the end: /home/$SSLUSER/free-ssl/start_renew.sh shift" | tee -a $LOG
 echo " " | tee -a $LOG
 echo "Don't forget to vote for mrgr delegate." | tee -a $LOG
 
