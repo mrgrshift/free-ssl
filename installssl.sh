@@ -85,7 +85,7 @@ echo "NETWORK_INTERFACE=\"$NETWORK_INTERFACE\"" >> $CONF
 
 echo
 echo "*************************************** Please do the following:"
-echo "Run: sudo nano /etc/ufw/before.rules"
+echo -e "Run: ${CYAN}sudo nano /etc/ufw/before.rules${OFF}"
 echo "And go to the bottom of the file and check your last 4 lines, should be like follow:"
 echo "    *nat"
 echo "    :PREROUTING ACCEPT [0:0]"
@@ -100,6 +100,7 @@ echo "* If you don't accept the following question this script will restore your
 	read -p "Do you want to continue (y/n)?: " -n 1 -r
 	if [[  $REPLY =~ ^[Yy]$ ]]
 	   then
+		echo " " | tee -a $LOG
 		echo "Installing the renew script.." | tee -a $LOG
 		echo "#!/bin/sh" >  start_renew.sh
 		echo "cd /home/$SSLUSER/free-ssl/" >> start_renew.sh
@@ -151,8 +152,8 @@ echo "Now you can visit your address https://$DOMAIN_NAME and see the result. :)
 echo " "  | tee -a $LOG
 echo "Now to enable the renewssh.sh script you need to add a new cron task." | tee -a $LOG
 echo "It is recommended to use http://www.crontab-generator.org/ to help you with your expression" | tee -a $LOG
-echo -e "Example for check your SSL certificate every Wednesday at 18pm you need to run ${CYAN}sudo crontab -e${OFF} and add at the end:"
-echo "Example for check your SSL certificate every Wednesday at 18pm you need to run sudo crontab -e and add at the end:" >> $LOG
+echo -e "Example for check your SSL certificate every Wednesday at 12pm you need to run ${CYAN}sudo crontab -e${OFF} and add at the end:"
+echo "Example for check your SSL certificate every Wednesday at 12pm you need to run sudo crontab -e and add at the end:" >> $LOG
 echo "* 12 * * WED bash /home/$SSLUSER/free-ssl/start_renew.sh >> /home/$SSLUSER/free-ssl/logs/cron.log" | tee -a $LOG
 echo "To renew a certificate in Shift node please add at the end: /home/$SSLUSER/free-ssl/start_renew.sh shift" | tee -a $LOG
 echo " " | tee -a $LOG
