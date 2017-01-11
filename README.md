@@ -17,7 +17,6 @@ You need to complete all the installssl.sh instructions, at the end it will tell
 `renewssl.sh` will renew your certificate if the expiration date is less than 30 days.<br>
 To see the result of the script go to: *~/free-ssl/logs/renewssl.log*<br>
 **IMPORTANT NOTICE** renewssl.sh also will perform *bash lisk.sh reload*, please check before enable automatic renewal if your managment script can handle a random reload of Lisk.<br>
-.. For Shift the renewssl.sh script will stop and restart your *shift screen* session if you need other method please contact [mrgr] (https://shiftnrg.slack.com/messages/@mrgr/).<br>
 
 ## Install self signed certificate.
 If you don't have your own domain you can still generate a SSL certificate, use `bash localssl.sh`<br>
@@ -27,8 +26,8 @@ To see the result of the script go to: *~/free-ssl/logs/localssl.log*<br>
 
 ## Vote/Donate
 If you like this script please consider to vote/donate to this accounts:<br>
-LISK: 3125853987625788223L<br>
-SHIFT: 14156057994616021440S<br>
+LISK: [3125853987625788223L] (https://explorer.lisk.io/address/3125853987625788223L)<br>
+SHIFT: [14156057994616021440S] (https://explorer.shiftnrg.org/address/14156057994616021440S)<br>
 
 ## Links
 Documentation: https://certbot.eff.org/docs <br>
