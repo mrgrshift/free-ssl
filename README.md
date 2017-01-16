@@ -3,7 +3,7 @@ This script will help you to generate a trusted SSL certificate issued by Letsen
 This script uses https://github.com/certbot/certbot
 
 ## Requisites
-* Obligatory, you need to have your own domain.
+* Obligatory, you need to have your own domain. Follow [this guide] (https://forum.lisk.io/viewtopic.php?f=38&t=1367) if you want a free domain.
 	* If the domain for your server is http://server01.yourdomain.com/ use --> `server01.yourdomain.com`
 * You need to be familiar with ufw, follow this guide: [UFW - First time with a firewall] (https://forum.lisk.io/viewtopic.php?f=38&t=1342)
 * You need to know your [Network Interface] (http://www.computerhope.com/unix/uifconfi.htm).<br>
